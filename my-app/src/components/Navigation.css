@@ -1,0 +1,43 @@
+:root {
+  --nav-bg: linear-gradient(
+  to right,
+  var(--primary-color),
+  var(--secondary-color),
+  var(--tertiary-color),
+  var(--success-color),
+  var(--info-color),
+  var(--warning-color),
+  var(--danger-color)
+  );
+  }
+  
+  .navigation {
+  background-image: var(--nav-bg);
+  background-size: 300% 100%;
+  transition: all 0.3s;
+  }
+  
+  .navigation a.nav-link {
+  color: var(--light-color);
+  font-weight: 500;
+  transition: all 0.3s;
+  }
+  
+  .navigation a.nav-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  }
+  
+  .navigation .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  }
+  
+  .navigation .navbar-toggler:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .navigation .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' %3e%3cpath stroke='var(--dark-color)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }

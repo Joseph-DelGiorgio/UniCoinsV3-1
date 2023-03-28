@@ -1,0 +1,211 @@
+/* Colors */
+:root {
+  --primary-color: #00A9E0;
+  --secondary-color: #7CCDF7;
+  --tertiary-color: #ECF6FD;
+  --success-color: #00ff00;
+  --info-color: #0000ff;
+  --warning-color: #4b0082;
+  --danger-color: #9400d3;
+  --light-color: #fff;
+  --dark-color: #333;
+  --error-color: #ff0000;
+}
+
+/* Typography */
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--tertiary-color);
+}
+
+h1,
+h2 {
+  text-align: center;
+  color: var(--dark-color);
+  margin-bottom: 1rem;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  color: var(--dark-color);
+  margin-bottom: 1rem;
+}
+
+/* Container */
+.container {
+  max-width: 960px;
+  margin: 2rem auto;
+  background-color: var(--light-color);
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* List */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+/* Buttons */
+button {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--light-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+button:hover,
+button:focus,
+button:active {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+button.btn-success {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+button.btn-success:hover,
+button.btn-success:focus,
+button.btn-success:active {
+  background-color: var(--tertiary-color);
+  border-color: var(--tertiary-color);
+}
+
+button.btn-danger {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+button.btn-danger:hover,
+button.btn-danger:focus,
+button.btn-danger:active {
+  background-color: var(--warning-color);
+  border-color: var(--warning-color);
+}
+
+/* Navbar */
+.AppNavbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+
+.AppNavbar a {
+  color: var(--light-color);
+  text-decoration: none;
+  padding: 0 0.5rem;
+  transition: color 0.3s;
+}
+
+.AppNavbar a:hover,
+.AppNavbar a:focus {
+  color: var(--secondary-color);
+}
+
+/* Navigation */
+.Navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.Navigation ul {
+display: flex;
+align-items: center;
+margin: 0;
+}
+
+.Navigation li {
+margin: 0 1rem;
+}
+
+.Navigation a {
+color: var(--light-color);
+text-decoration: none;
+transition: color 0.3s;
+}
+
+.Navigation a:hover,
+.Navigation a:focus {
+color: var(--secondary-color);
+}
+
+/* Form */
+form {
+display: flex;
+flex-direction: column;
+gap: 1rem;
+}
+
+input,
+textarea,
+select {
+padding: 0.5rem;
+border-radius: 0.5rem;
+border: 1px solid #dee2e6;
+}
+
+/* Footer */
+footer {
+background-color: var(--dark-color);
+color: var(--light-color);
+padding: 1rem;
+text-align: center;
+}
+
+/* Task styles */
+.Task {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+margin-bottom: 2rem;
+}
+
+.Task h2 {
+margin-bottom: 1rem;
+}
+
+.Task p {
+margin-bottom: 1rem;
+}
+
+.Task img {
+max-width: 100%;
+height: auto;
+margin-bottom: 1rem;
+}
+
+.Task button {
+margin-bottom: 1rem;
+}
+.home-image {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}

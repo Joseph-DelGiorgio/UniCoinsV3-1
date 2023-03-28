@@ -1,0 +1,19 @@
+{
+  "name": "unicoins",
+  "version": "1.0.0",
+  "description": "view READ.Me file",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx hardhat test"
+  },
+  "author": "Joseph Del Giorgio",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "chai": "^4.3.4",
+    "hardhat": "^2.12.7"
+  },
+  "dependencies": {
+    "react-router-dom": "^6.9.0"
+  }
+}
