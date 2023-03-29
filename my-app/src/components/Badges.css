@@ -11,12 +11,14 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  max-width: 600px;
+  width: 80%;
   margin: 0 auto;
   background-color: var(--light-color);
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+
 
 h2 {
   margin-bottom: 1.5rem;
@@ -26,7 +28,7 @@ h2 {
 
 .badge-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2rem;
 }
 
@@ -36,6 +38,7 @@ h2 {
   padding: 2rem;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 .badge-name {
