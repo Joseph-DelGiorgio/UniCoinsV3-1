@@ -1,6 +1,7 @@
 import './Badges.css';
 import homeImage from '../assets/homeImage.jpg';
 import React from "react";
+import './Home.css';
 
 const Home = () => {
   return (
