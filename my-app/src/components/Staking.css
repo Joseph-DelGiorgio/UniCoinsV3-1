@@ -1,8 +1,18 @@
+/* Variables */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #3398ff;
+  --tertiary-color: #5cb8ff;
+  --dark-color: #343a40;
+  --light-color: #fff;
+}
+
+/* Staking Page */
 .staking-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(90deg, var(--tertiary-color) 0%, var(--secondary-color) 50%, var(--primary-color) 100%);
+  background-image: linear-gradient(90deg, var(--tertiary-color) 0%, var(--secondary-color) 50%, var(--primary-color) 100%);
   padding: 2rem;
   border-radius: 5px;
   width: 100%;
@@ -16,6 +26,10 @@
   align-items: center;
   min-height: 100vh;
   padding: 2rem;
+}
+.description-container {
+  min-height: 100px;
+  resize: vertical;
 }
 
 .form-group {
@@ -70,6 +84,18 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100%;
+}
+.input-field {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.description-container {
+  min-height: 100px;
+  resize: vertical;
 }
 
 /* Navigation Bar */
