@@ -3,13 +3,7 @@
   --primary-color: #89CFF0; /* Baby blue */
   --light-color: #ffffff;
   --dark-color: #000000; /* Changed to black */
-}
-
-/* Colors */
-:root {
-  --primary-color: #89CFF0; /* Baby blue */
-  --light-color: #fff;
-  --dark-color: #000; /* Changed to black */
+  --accent-color: #6c757d; /* Added accent color */
 }
 
 body {
@@ -25,70 +19,123 @@ body {
   background-color: var(--light-color);
   border-radius: 1rem;
 }
-  .app-navbar {
+
+.app-navbar {
   background-color: transparent !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 0.25rem 1rem;
-  }
-  
-  .app-navbar a.nav-link {
-    color: var(--dark-color); /* Changed to use dark color variable */
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: all 0.3s;
-    padding: 0.5rem 0.75rem;
-    border-radius: 5px;
-    background-color: transparent;
-    margin: 0 0.25rem;
-  }
-  
-  .app-navbar a.nav-link:hover {
+}
+
+.app-navbar a.nav-link {
+  color: var(--dark-color); /* Changed to use dark color variable */
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+  background-color: transparent;
+  margin: 0 0.25rem;
+}
+
+.app-navbar a.nav-link:hover {
   color: var(--primary-color);
   text-decoration: none;
   background-color: var(--light-color);
-  }
-  
-  .app-navbar .navbar-toggler {
+}
+
+.app-navbar .navbar-toggler {
   border-color: var(--light-color);
-  }
-  
-  .app-navbar .navbar-toggler:hover {
+}
+
+.app-navbar .navbar-toggler:hover {
   background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .app-navbar .navbar-toggler-icon {
+}
+
+.app-navbar .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' %3e%3cpath stroke='var(--light-color)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-  }
-  
-  .app-navbar .navbar-text {
-  color: var(--light-color);
+}
+
+.app-navbar .navbar-text {
+  color: var(--dark-color); /* Changed to use dark color variable */
   margin-left: 1rem;
   cursor: pointer;
   transition: all 0.3s;
   font-size: 0.9rem;
-  }
-  
-  .app-navbar .navbar-text:hover {
+}
+
+.app-navbar .navbar-text:hover {
   color: var(--secondary-color);
-  }
-  
-  .app-navbar .navbar-text a {
-  color: var(--light-color);
+}
+
+.app-navbar .navbar-text a {
+  color: var(--dark-color); /* Changed to use dark color variable */
   text-decoration: underline;
-  }
-  
-  .app-navbar .navbar-text a:hover {
-  color: var(--light-color);
-  }
-  
-  .app-navbar .navbar-nav .active > a,
-  .app-navbar .navbar-nav .active > a:hover,
-  .app-navbar .navbar-nav .active > a:focus {
+}
+
+.app-navbar .navbar-text a:hover {
+  color: var(--dark-color); /* Changed to use dark color variable */
+}
+
+.app-navbar .navbar-nav .active > a,
+.app-navbar .navbar-nav .active > a:hover,
+.app-navbar .navbar-nav .active > a:focus {
   background-color: var(--secondary-color);
-  }
-  
-  .app-navbar .navbar-nav .nav-link.disabled {
+}
+
+.app-navbar .navbar-nav .nav-link.disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  }
+}
 
+.connect-wallet-btn {
+  background-color: var(--accent-color);
+  border: none;
+  color: var(--light-color);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s;
+  margin-left: 1rem;
+}
+
+.connect-wallet-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+  }
+  
+  .d-flex {
+  display: flex;
+  }
+  
+  .justify-content-between {
+  justify-content: space-between;
+  }
+  
+  .align-items-center {
+  align-items: center;
+  }
+  
+  .w-100 {
+  width: 100%;
+  }
+  
+  .disconnect-wallet-btn {
+  background-color: var(--dark-color);
+  border: none;
+  color: var(--light-color);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s;
+  margin-left: 1rem;
+  }
+  
+  .disconnect-wallet-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+  }
+  
+  .disconnect-wallet-btn:hover {
+  background-color: var(--accent-color);
+  color: var(--light-color);
+  }
