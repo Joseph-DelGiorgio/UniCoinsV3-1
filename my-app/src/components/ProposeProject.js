@@ -1,42 +1,53 @@
 import React, { useState } from 'react';
-import './ProposeProject.css';
 
-const ProposeProject = ({ proposeProject, balance }) => {
-  const [projectDescription, setProjectDescription] = useState('');
-  const [stakingAmount, setStakingAmount] = useState('');
+const ProposeProject = ({ web3, account, contract }) => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [budget, setBudget] = useState('');
 
-  const handleProposeProject = async () => {
-    await proposeProject(projectDescription, stakingAmount);
-    setProjectDescription('');
-    setStakingAmount('');
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (contract) {
+      await contract.methods
+        .proposeProject(title, description, web3.utils.toWei(budget, 'ether'))
+        .send({ from: account });
+    }
+
+    setTitle('');
+    setDescription('');
+    setBudget('');
   };
 
   return (
-    <div className="propose-project-container">
-      <h2>Propose Project</h2>
-      <div className="balance">
-        <h3>Your Balance: {balance} UNicoins</h3>
-      </div>
-      <div className="form-group">
-        <label htmlFor="projectDescription">Project Description:</label>
-        <textarea
-          id="projectDescription"
-          className="form-control"
-          value={projectDescription}
-          onChange={(e) => setProjectDescription(e.target.value)}
+    <div className="container">
+      <h1>Propose a New Project</h1>
+      <form onSubmit={onSubmit}>
+        <label htmlFor="title">Title:</label>
+        <input
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
         />
-      </div>
-      <div className="form-group">
-        <label htmlFor="stakingAmount">Staking Amount:</label>
+        <label htmlFor="description">Description:</label>
+        <textarea
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        ></textarea>
+        <label htmlFor="budget">Budget (ETH):</label>
         <input
           type="number"
-          id="stakingAmount"
-          className="form-control"
-          value={stakingAmount}
-          onChange={(e) => setStakingAmount(e.target.value)}
+          id="budget"
+          value={budget}
+          onChange={(e) => setBudget(e.target.value)}
+          required
         />
-      </div>
-      <button onClick={handleProposeProject}>Propose Project</button>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 };
