@@ -67,3 +67,114 @@
 .project:hover .project-overlay {
   opacity: 1;
 }
+.filter-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.filter-options select {
+  padding: 5px 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+}
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: var(--secondary-color);
+}
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 5px 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+}
+.project-charts {
+  margin-bottom: 20px;
+}
+.poap-project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.poap-project {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.poap-project:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.poap-project h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.poap-project p {
+  margin-bottom: 15px;
+}
+
+.poap-progress-bar {
+  height: 20px;
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
+.poap-progress {
+  height: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.poap-project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.poap-project-overlay a {
+  color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.poap-project:hover .poap-project-overlay {
+  opacity: 1;
+}
