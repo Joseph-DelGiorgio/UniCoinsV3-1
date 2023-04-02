@@ -8,6 +8,7 @@ const AppNavbar = ({ connectWallet, disconnectWallet, account }) => {
 
   useEffect(() => {
     const fetchBalanceAndRole = async () => {
+      // Remove the contract-related code since it's not being used in this component
     };
 
     fetchBalanceAndRole();
@@ -25,6 +26,8 @@ const AppNavbar = ({ connectWallet, disconnectWallet, account }) => {
             <Nav.Link href="/badges">Badges</Nav.Link>
             <Nav.Link href="/staking">Staking</Nav.Link>
             <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+            <Nav.Link href="/moonpay">MoonPay</Nav.Link>
+
           </Nav>
           <div>
             {account ? (
@@ -47,7 +50,6 @@ const AppNavbar = ({ connectWallet, disconnectWallet, account }) => {
 }
 
 export default AppNavbar;
-
 
 
 
