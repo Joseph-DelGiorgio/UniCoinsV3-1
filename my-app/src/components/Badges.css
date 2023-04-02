@@ -54,3 +54,31 @@ h2 {
   font-size: 1rem;
   color: var(--dark-color);
 }
+.poap-badge-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.poap-badge-card {
+  background-color: var(--light-grey);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.poap-badge-name {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.poap-badge-description,
+.poap-badge-date {
+  font-size: 1rem;
+  color: var(--dark-color);
+}
