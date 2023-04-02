@@ -16,6 +16,8 @@ import UNCollaboration from '../abis/UNCollaboration.json';
 import UNBadge from '../abis/UNBadge.json';
 import Badges from "./Badges";
 import './Navigation.css';
+import Dashboard from './Dashboard';
+import MoonPay from './MoonPay';
 
 const UNCollaborationAddress = 'REPLACE_WITH_UNCOLLABORATION_CONTRACT_ADDRESS';
 const UNBadgeAddress = 'REPLACE_WITH_UNBADGE_CONTRACT_ADDRESS';
@@ -26,6 +28,8 @@ const App = () => {
   const [UNCollaborationContract, setUNCollaborationContract] = useState(null);
   const [UNBadgeContract, setUNBadgeContract] = useState(null);
   const [tasks, setTasks] = useState([]);
+  const [poapBadges, setPoapBadges] = useState([]);
+
 
   useEffect(() => {
     const initWeb3 = async () => {
@@ -34,10 +38,9 @@ const App = () => {
         setWeb3(web3Instance);
       } else {
         console.log('Please install MetaMask!');
-        // Consider displaying an alert or notification to the user about the missing Web3 provider.
       }
     };
-  
+
     initWeb3();
   }, []);
 
@@ -59,6 +62,10 @@ const App = () => {
   }, [web3]);
 
   useEffect(() => {
+    fetchPoapBadges();
+  }, [UNBadgeContract]);
+  
+  useEffect(() => {
     const fetchTasks = async () => {
       if (UNCollaborationContract) {
         const taskCount = await UNCollaborationContract.methods.getTaskCount().call();
@@ -78,30 +85,74 @@ const App = () => {
 
   const addTask = async (taskDescription, reward, volunteer) => {
     if (UNCollaborationContract) {
-      await UNCollaborationContract.methods        .addTask(taskDescription, reward, volunteer)
-      .send({ from: account });
-  }
-};
+      await UNCollaborationContract.methods
+        .addTask(taskDescription, reward, volunteer)
+        .send({ from: account });
+    }
+  };
 
-const completeTask = async (taskIndex) => {
-  if (UNCollaborationContract) {
-    await UNCollaborationContract.methods
-      .completeTask(taskIndex)
-      .send({ from: account });
-  }
-};
+  const completeTask = async (taskIndex) => {
+    if (UNCollaborationContract) {
+      await UNCollaborationContract.methods
+        .completeTask(taskIndex)
+        .send({ from: account });
+    }
+  };
+  const fetchPoapBadges = async () => {
+    if (UNBadgeContract) {
+      const badgeCount = await UNBadgeContract.methods.getBadgeCount().call();
+      const fetchedBadges = [];
+  
+      for (let i = 0; i < badgeCount; i++) {
+        const badge = await UNBadgeContract.methods.badges(i).call();
+        fetchedBadges.push(badge);
+      }
+  
+      setPoapBadges(fetchedBadges);
+    }
+  };
+  
 
-const awardBadge = async (volunteer, tokenId, badgeDescription, hoursContributed) => {
-  if (UNBadgeContract) {
-    await UNBadgeContract.methods
+  const awardBadge = async (volunteer, tokenId, badgeDescription, hoursContributed) => {
+    if (UNBadgeContract) {
+      await UNBadgeContract.methods
       .awardBadge(volunteer, tokenId, badgeDescription, hoursContributed)
       .send({ from: account });
-  }
-};
-// ...
-return (
-  <Web3Provider
-    value={{
+      }
+      };
+      
+      const [balance, setBalance] = useState(0);
+      const [stakingPosition, setStakingPosition] = useState(0);
+      
+      const stakeTokens = async (amount) => {
+      // Implement your staking functionality here
+      };
+      
+      const unstakeTokens = async (amount) => {
+      // Implement your unstaking functionality here
+      };
+      
+      const connectWallet = async () => {
+      if (window.ethereum) {
+      try {
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await web3.eth.getAccounts();
+      setAccount(accounts[0]);
+      } catch (error) {
+      console.log('Error connecting to wallet:', error);
+      }
+      } else {
+      console.log('Please install MetaMask!');
+      }
+      };
+      
+      const disconnectWallet = () => {
+      setAccount(null);
+      };
+      
+      return (
+      <Web3Provider
+      value={{
       web3,
       account,
       contract: UNCollaborationContract,
@@ -109,55 +160,80 @@ return (
       addTask,
       completeTask,
       awardBadge,
-    }}
-  >
-    <div className="App">
-      <AppNavbar />
+      }}
+      >
+      <div className="App">
+      <AppNavbar
+             connectWallet={connectWallet}
+             disconnectWallet={disconnectWallet}
+             account={account}
+           />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              web3={web3}
-              account={account}
-              UNCollaborationContract={UNCollaborationContract}
-              UNBadgeContract={UNBadgeContract}
-            />
-          }
-        />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route
-          path="/task/:id"
-          element={
-            <Task
-              tasks={tasks}
-              completeTask={completeTask}
-            />
-          }
-        />
+      <Route
+      path="/"
+      element={
+      <Home
+                   web3={web3}
+                   account={account}
+                   UNCollaborationContract={UNCollaborationContract}
+                   UNBadgeContract={UNBadgeContract}
+                 />
+      }
+      />
+      <Route path="/tasks" element={<Tasks />} />
+      <Route
+  path="/badges"
+  element={
+    <Badges
+      provider={web3}
+      volunteerAddress={account}
+      badgeContract={UNBadgeContract}
+      poapBadges={poapBadges}
+    />
+  }
+/>
 
+      <Route
+      path="/task/:id"
+      element={
+      <Task
+                   tasks={tasks}
+                   completeTask={completeTask}
+                 />
+      }
+      />
       <Route path="/projects" element={<Projects />} />
-      <Route path="/staking" element={<Staking />} />
+      <Route
+      path="/staking"
+      element={
+      <Staking
+                   stakeTokens={stakeTokens}
+                   unstakeTokens={unstakeTokens}
+                   balance={balance}
+                   stakingPosition={stakingPosition}
+                 />
+      }
+      />
       <Route path="/propose-project" element={<ProposeProject />} />
       <Route
-        path="/badges"
-        element={
-          <Badges
-            provider={web3}
-            volunteerAddress={account}
-            badgeContract={UNBadgeContract}
-          />
-        }
+      path="/badges"
+      element={
+      <Badges
+                   provider={web3}
+                   volunteerAddress={account}
+                   badgeContract={UNBadgeContract}
+                 />
+      }
       />
-    </Routes>
-  </div>
-</Web3Provider>
-);
-
-};
-
-export default App;
-
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/moonpay" element={<MoonPay />} />
+      </Routes>
+      </div>
+      </Web3Provider>
+      );
+    };
+      
+      export default App;
            
 
 
