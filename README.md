@@ -7,6 +7,7 @@ CollaborationTask: Represents a task with a project manager, task description, r
 UNicoinBalance: Represents the balance and hours contributed by a user.
 StakingPosition: Represents a staking position with staker's address, amount, start time, and end time.
 ProjectProposal: Represents a project proposal with the proposer's address, project description, staked amount, validation status, and deliverables status.
+
 Mappings:
 balances: Maps an address to its UNicoin balance and hours contributed.
 volunteers: Maps an address to a boolean indicating if the address is a registered volunteer.
@@ -18,8 +19,10 @@ TOTAL_UNICOINS: The total supply of UNCollaboration Coins (21 million).
 stakingFeePercentage: The percentage of staking fee (initially set to 0%).
 nextProposalId: The next project proposal ID.
 tasks: An array of collaboration tasks.
+
 Events:
 Various events for logging different actions, such as adding tasks, completing tasks, adding volunteers, validating project proposals, and updating project deliverables.
+
 Functions:
 constructor: Initializes the contract, mints the total supply of tokens, and sets the contract deployer as the first project manager.
 addTask: Allows project managers to add collaboration tasks.
