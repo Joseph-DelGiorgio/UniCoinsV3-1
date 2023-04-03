@@ -1,5 +1,25 @@
 UNCollaboration: A Collaborative Platform for Volunteers
-This Solidity smart contract powers a collaborative platform called UNCollaboration. The platform is designed to incentivize volunteer work by providing a way for volunteers to earn tokens called UNicoin by completing tasks proposed by project managers. The contract also supports staking and project proposals.
+
+
+This code defines two smart contracts: UNCollaboration and UNBadge. These contracts are designed to handle a collaboration platform, where volunteers can work on tasks and earn tokens, propose projects, and receive badges as rewards.
+
+UNCollaboration contract:
+
+Inherits from OpenZeppelin's ERC20, Ownable, and ReentrancyGuard contracts.
+Defines various structs to store information about tasks, badges, balances, staking positions, and project proposals.
+Implements functionality for project managers to add tasks and mint tokens.
+Implements functionality for volunteers to complete tasks, stake tokens, and propose projects.
+Implements functionality for project managers to validate project proposals, update project deliverables, and forfeit staked tokens if deliverables are not met.
+Allows the contract owner to set the staking fee percentage.
+Emits various events to track the state of tasks, volunteers, project managers, and other actions.
+
+UNBadge contract:
+
+Inherits from OpenZeppelin's ERC721 and Ownable contracts.
+Defines a struct to store information about badges.
+Implements functionality for minting badges with specific hours contributed and level.
+Implements functionality for querying badge data based on the token ID.
+Implements functionality for burning badges.
 
 Features: 
 Adding tasks with a description and a reward amount
@@ -40,8 +60,6 @@ ProjectProposalValidated: Fired when a project proposal is validated
 ProjectDeliverablesUpdated: Fired when a project's deliverables are updated
 ProjectStakeForfeited: Fired when a project's staked UNicoin tokens are forfeited
 
-Contracts: 
-The contract also includes a separate contract called UNBadge, which is used for creating and managing badges. This contract is also an ERC721 contract and is owned by the same owner as the main contract.
 
 License: 
 This contract is licensed under the UNLICENSED license.
