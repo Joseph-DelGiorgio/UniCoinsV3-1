@@ -178,3 +178,36 @@
 .poap-project:hover .poap-project-overlay {
   opacity: 1;
 }
+.filter-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-options label {
+  margin-right: 10px;
+}
+
+.filter-options select {
+  padding: 5px 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.filter-options button {
+  padding: 5px 10px;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+}
+
+.filter-options button:hover {
+  background-color: var(--secondary-color);
+}
