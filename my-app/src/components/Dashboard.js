@@ -43,6 +43,7 @@ const Dashboard = () => {
       <h2>Dashboard</h2>
       <SearchBar searchProjects={searchProjects} />
       <FilterOptions filterAndSortProjects={filterAndSortProjects} />
+      {/* Use the filteredProjects for the ProjectCharts */}
       <ProjectCharts projects={filteredProjects} />
       <div className="project-list">
         {currentProjects.map((project) => (
