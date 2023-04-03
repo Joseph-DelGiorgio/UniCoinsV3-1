@@ -1,4 +1,4 @@
-code defines a smart contract called UNCollaboration, which is an ERC20 token for a decentralized platform that connects volunteers and project managers for collaboration on various tasks and projects. The contract is written in Solidity and utilizes OpenZeppelin libraries for standard ERC20 token functionality, safe mathematical operations, protection against reentrancy attacks, and ownership management.
+This code defines a smart contract called UNCollaboration, which is an ERC20 token for a decentralized platform that connects volunteers and project managers for collaboration on various tasks and projects. The contract is written in Solidity and utilizes OpenZeppelin libraries for standard ERC20 token functionality, safe mathematical operations, protection against reentrancy attacks, and ownership management.
 
 Key features of the contract are:
 
