@@ -1,5 +1,7 @@
 //This is the new version of the Unicoins smart contract, without the Badge (Erc721) Functionality, as we are using POAPs instead.
 
+//This is the new version of the Unicoins smart contract, without the Badge (Erc721) Functionality, as we are using POAPs instead.
+
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
@@ -49,10 +51,8 @@ contract UNCollaboration is ERC20, Ownable, ReentrancyGuard {
     uint256 public constant TOTAL_UNICOINS = 21000000 * 10 ** 18;
     uint256 public stakingFeePercentage = 0; // Initialize staking fee to 0%
 
-/* uint256 public constant TARGET_PRICE = 1 ether; // 1 UNC = 1 ETH
-uint256 public constant INITIAL_SUPPLY = 21000000 * 10 ** 18; // Total supply of UNC tokens
-uint256 public totalSupplyAdjusted = INITIAL_SUPPLY; // Initial adjusted supply
-*/
+    uint256 public constant TARGET_PRICE = 1 ether; // 1 UNC = 1 ETH
+    uint256 public totalDonated = 0;
 
     uint256 public nextProposalId = 0;
 
@@ -151,27 +151,27 @@ function validateProposal(uint256 proposalId, bool isValid) public {
     emit ProjectProposalValidated(proposalId, isValid);
 }
 
-function updateProjectDeliverables(uint256 proposalId, bool isDeliverablesMet) public {
-    require(projectManagers[msg.sender], "Only project managers can update project deliverables");
-    ProjectProposal storage proposal = projectProposals[proposalId];
-    require(proposal.validated, "Proposal must be validated first");
-    proposal.deliverablesMet = isDeliverablesMet;
+    function updateProjectDeliverables(uint256 proposalId, bool isDeliverablesMet) public {
+        require(projectManagers[msg.sender], "Only project managers can update project deliverables");
+        ProjectProposal storage proposal = projectProposals[proposalId];
+        require(proposal.validated, "Proposal must be validated first");
+        proposal.deliverablesMet = isDeliverablesMet;
 
-    if (isDeliverablesMet) {
-        // Return staked tokens to proposer
-        uint256 stakingReward = proposal.stakedAmount.mul(stakingFeePercentage).div(100);
-        uint256 returnedAmount = proposal.stakedAmount.sub(stakingReward);
-        _transfer(address(this), proposal.proposer, returnedAmount);
-        _transfer(address(this), owner(), stakingReward);
-    } else {
-        // Transfer staked tokens to project manager
-        _transfer(address(this), msg.sender, proposal.stakedAmount);
-        emit ProjectStakeForfeited(proposalId, proposal.proposer, proposal.stakedAmount);
+            if (isDeliverablesMet) {
+                // Return staked tokens to proposer
+                uint256 stakingReward = proposal.stakedAmount.mul(stakingFeePercentage).div(100);
+                uint256 returnedAmount = proposal.stakedAmount.sub(stakingReward);
+                _transfer(address(this), proposal.proposer, returnedAmount);
+                _transfer(address(this), owner(), stakingReward);
+            } else {
+                // Transfer staked tokens to project manager
+                _transfer(address(this), msg.sender, proposal.stakedAmount);
+                emit ProjectStakeForfeited(proposalId, proposal.proposer, proposal.stakedAmount);
+            }
+
+        emit ProjectDeliverablesUpdated(proposalId, isDeliverablesMet);
     }
-
-    emit ProjectDeliverablesUpdated(proposalId, isDeliverablesMet);
-}
-function setOrganizationAccount(address newOrganizationAccount) public onlyOwner {
+    function setOrganizationAccount(address newOrganizationAccount) public onlyOwner {
         organizationAccount = newOrganizationAccount;
     }
 
@@ -192,21 +192,20 @@ function setOrganizationAccount(address newOrganizationAccount) public onlyOwner
     }
 
     function rebase() public onlyOwner {
-    uint256 currentPrice = getCurrentPrice();
-    if (currentPrice > TARGET_PRICE) {
-        // Reduce the supply
-        totalSupplyAdjusted = totalSupplyAdjusted.mul(TARGET_PRICE).div(currentPrice);
-        _burn(address(this), totalSupplyAdjusted.sub(totalSupply()));
-    } else if (currentPrice < TARGET_PRICE) {
-        // Increase the supply
-        totalSupplyAdjusted = totalSupplyAdjusted.mul(currentPrice).div(TARGET_PRICE);
-        _mint(address(this), totalSupplyAdjusted.sub(totalSupply()));
-    }
+        uint256 currentPrice = getCurrentPrice();
+        if (currentPrice > TARGET_PRICE) {
+            // Reduce the supply
+            uint256 excessSupply = totalSupply().mul(currentPrice.sub(TARGET_PRICE)).div(currentPrice);
+            _burn(address(this), excessSupply);
+        } else if (currentPrice < TARGET_PRICE) {
+            // Increase the supply
+            uint256 requiredSupply = totalSupply().mul(TARGET_PRICE.sub(currentPrice)).div(TARGET_PRICE);
+            _mint(address(this), requiredSupply);
+        }
     }
 
     function getCurrentPrice() public view returns (uint256) {
-    return address(this).balance.mul(1 ether).div(totalSupplyAdjusted);
+        return totalDonated.mul(1 ether).div(totalSupply());
     }
-
 
 }
