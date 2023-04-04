@@ -64,10 +64,16 @@ contract UNCollaboration is ERC20, Ownable, ReentrancyGuard {
     event ProjectDeliverablesUpdated(uint256 indexed proposalId, bool deliverablesMet);
     event ProjectStakeForfeited(uint256 indexed proposalId, address indexed proposer, uint256 stakedAmount);
 
+   address public organizationAccount;
+
+    event DonationReceived(address indexed donor, uint256 amount);
+    event UNicoinsMintedForProject(uint256 indexed proposalId, uint256 amount);
+
     constructor() ERC20("UNCollaboration Coin", "UNC") {
         _mint(msg.sender, TOTAL_UNICOINS);
 
         projectManagers[msg.sender] = true;
+        organizationAccount = msg.sender;
         emit ProjectManagerAdded(msg.sender);
     }
 
@@ -160,4 +166,23 @@ function updateProjectDeliverables(uint256 proposalId, bool isDeliverablesMet) p
 
     emit ProjectDeliverablesUpdated(proposalId, isDeliverablesMet);
 }
+function setOrganizationAccount(address newOrganizationAccount) public onlyOwner {
+        organizationAccount = newOrganizationAccount;
+    }
+
+    function donate(uint256 amount) public {
+        require(amount > 0, "Donation amount must be greater than 0");
+        _mint(organizationAccount, amount);
+        emit DonationReceived(msg.sender, amount);
+    }
+
+    function mintForProject(uint256 proposalId, uint256 amount) public {
+        require(msg.sender == organizationAccount, "Only the organization account can mint for projects");
+        ProjectProposal storage proposal = projectProposals[proposalId];
+        require(proposal.validated, "Proposal must be validated first");
+        require(!proposal.deliverablesMet, "Project deliverables are already met");
+
+        _mint(proposal.proposer, amount);
+        emit UNicoinsMintedForProject(proposalId, amount);
+    }
 }
