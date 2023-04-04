@@ -49,6 +49,11 @@ contract UNCollaboration is ERC20, Ownable, ReentrancyGuard {
     uint256 public constant TOTAL_UNICOINS = 21000000 * 10 ** 18;
     uint256 public stakingFeePercentage = 0; // Initialize staking fee to 0%
 
+/* uint256 public constant TARGET_PRICE = 1 ether; // 1 UNC = 1 ETH
+uint256 public constant INITIAL_SUPPLY = 21000000 * 10 ** 18; // Total supply of UNC tokens
+uint256 public totalSupplyAdjusted = INITIAL_SUPPLY; // Initial adjusted supply
+*/
+
     uint256 public nextProposalId = 0;
 
     CollaborationTask[] public tasks;
@@ -185,4 +190,23 @@ function setOrganizationAccount(address newOrganizationAccount) public onlyOwner
         _mint(proposal.proposer, amount);
         emit UNicoinsMintedForProject(proposalId, amount);
     }
+
+    function rebase() public onlyOwner {
+    uint256 currentPrice = getCurrentPrice();
+    if (currentPrice > TARGET_PRICE) {
+        // Reduce the supply
+        totalSupplyAdjusted = totalSupplyAdjusted.mul(TARGET_PRICE).div(currentPrice);
+        _burn(address(this), totalSupplyAdjusted.sub(totalSupply()));
+    } else if (currentPrice < TARGET_PRICE) {
+        // Increase the supply
+        totalSupplyAdjusted = totalSupplyAdjusted.mul(currentPrice).div(TARGET_PRICE);
+        _mint(address(this), totalSupplyAdjusted.sub(totalSupply()));
+    }
+    }
+
+    function getCurrentPrice() public view returns (uint256) {
+    return address(this).balance.mul(1 ether).div(totalSupplyAdjusted);
+    }
+
+
 }
