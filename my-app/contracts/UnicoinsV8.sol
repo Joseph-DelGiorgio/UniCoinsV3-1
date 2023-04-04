@@ -1,6 +1,5 @@
 //This is the new version of the Unicoins smart contract, without the Badge (Erc721) Functionality, as we are using POAPs instead.
 
-//This is the new version of the Unicoins smart contract, without the Badge (Erc721) Functionality, as we are using POAPs instead.
 
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
