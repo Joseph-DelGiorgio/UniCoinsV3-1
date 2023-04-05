@@ -1,4 +1,5 @@
 import { Web3Provider } from '../contexts/Web3Context';
+import { Magic } from 'magic-sdk';
 import AppNavbar from './AppNavbar';
 import Tasks from './Tasks';
 import Task from './Task';
@@ -21,6 +22,7 @@ import MoonPay from './MoonPay';
 
 const UNCollaborationAddress = 'REPLACE_WITH_UNCOLLABORATION_CONTRACT_ADDRESS';
 const UNBadgeAddress = 'REPLACE_WITH_UNBADGE_CONTRACT_ADDRESS';
+const magic = new Magic('pk_live_BFAD4177F785E96E');
 
 const App = () => {
   const [web3, setWeb3] = useState(null);
@@ -28,9 +30,34 @@ const App = () => {
   const [UNCollaborationContract, setUNCollaborationContract] = useState(null);
   const [UNBadgeContract, setUNBadgeContract] = useState(null);
   const [tasks, setTasks] = useState([]);
-  const [poapBadges, setPoapBadges] = useState([]);
+  const [poapBadges, setPoapBadges] = useState([]); 
+  const [connected, setConnected] = useState(false);
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const email = new FormData(e.target).get('email');
+    if (email) {
+      await magic.auth.loginWithEmailOTP({ email });
+      setConnected(true);
+    }
+  };
 
+  const handleLogout = async () => {
+    await magic.user.logout();
+    setConnected(false);
+  }; 
+
+  useEffect(() => {
+  }, []);
+  
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      const loggedIn = await magic.user.isLoggedIn();
+      setConnected(loggedIn);
+    };
+    checkLoggedIn();
+  }, []);
+  
   useEffect(() => {
     const initWeb3 = async () => {
       if (window.ethereum) {
@@ -151,90 +178,91 @@ const App = () => {
       };
       
       return (
-      <Web3Provider
-      value={{
-      web3,
-      account,
-      contract: UNCollaborationContract,
-      badgeContract: UNBadgeContract,
-      addTask,
-      completeTask,
-      awardBadge,
-      }}
-      >
-      <div className="App">
-      <AppNavbar
-             connectWallet={connectWallet}
-             disconnectWallet={disconnectWallet}
-             account={account}
-           />
-      <Routes>
-      <Route
-      path="/"
-      element={
-      <Home
-                   web3={web3}
-                   account={account}
-                   UNCollaborationContract={UNCollaborationContract}
-                   UNBadgeContract={UNBadgeContract}
-                 />
-      }
-      />
-      <Route path="/tasks" element={<Tasks />} />
-      <Route
-  path="/badges"
-  element={
-    <Badges
-      provider={web3}
-      volunteerAddress={account}
-      badgeContract={UNBadgeContract}
-      poapBadges={poapBadges}
-    />
-  }
-/>
-
-      <Route
-      path="/task/:id"
-      element={
-      <Task
-                   tasks={tasks}
-                   completeTask={completeTask}
-                 />
-      }
-      />
-      <Route path="/projects" element={<Projects />} />
-      <Route
-      path="/staking"
-      element={
-      <Staking
-                   stakeTokens={stakeTokens}
-                   unstakeTokens={unstakeTokens}
-                   balance={balance}
-                   stakingPosition={stakingPosition}
-                 />
-      }
-      />
-      <Route path="/propose-project" element={<ProposeProject />} />
-      <Route
-      path="/badges"
-      element={
-      <Badges
-                   provider={web3}
-                   volunteerAddress={account}
-                   badgeContract={UNBadgeContract}
-                 />
-      }
-      />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/moonpay" element={<MoonPay />} />
-      </Routes>
-      </div>
-      </Web3Provider>
+        <Web3Provider
+          value={{
+            web3,
+            account,
+            contract: UNCollaborationContract,
+            badgeContract: UNBadgeContract,
+            addTask,
+            completeTask,
+            awardBadge,
+          }}
+        >
+          <div className="App">
+            <AppNavbar
+              connectWallet={connectWallet}
+              disconnectWallet={disconnectWallet}
+              account={account}
+              connected={connected}
+              handleLogin={handleLogin}
+              handleLogout={handleLogout}
+            />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Home
+                    web3={web3}
+                    account={account}
+                    UNCollaborationContract={UNCollaborationContract}
+                    UNBadgeContract={UNBadgeContract}
+                  />
+                }
+              />
+              <Route path="/tasks" element={<Tasks />} />
+              <Route
+                path="/badges"
+                element={
+                  <Badges
+                    provider={web3}
+                    volunteerAddress={account}
+                    badgeContract={UNBadgeContract}
+                    poapBadges={poapBadges}
+                  />
+                }
+              />
+              <Route
+                path="/task/:id"
+                element={
+                  <Task
+                    tasks={tasks}
+                    completeTask={completeTask}
+                  />
+                }
+              />
+              <Route path="/projects" element={<Projects />} />
+              <Route
+                path="/staking"
+                element={
+                  <Staking
+                    stakeTokens={stakeTokens}
+                    unstakeTokens={unstakeTokens}
+                    balance={balance}
+                    stakingPosition={stakingPosition}
+                  />
+                }
+              />
+              <Route path="/propose-project" element={<ProposeProject />} />
+              <Route
+                path="/badges"
+                element={
+                  <Badges
+                    provider={web3}
+                    volunteerAddress={account}
+                    badgeContract={UNBadgeContract}
+                  />
+                }
+              />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/moonpay" element={<MoonPay />} />
+            </Routes>
+          </div>
+        </Web3Provider>
       );
-    };
+    }  
       
-      export default App;
-           
+  export default App;
 
 
     
