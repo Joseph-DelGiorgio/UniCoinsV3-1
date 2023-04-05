@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import './AppNavbar.css';
 
-const AppNavbar = ({ connectWallet, disconnectWallet, account }) => {
+const AppNavbar = ({ connectWallet, disconnectWallet, account, connected, handleLogin, handleLogout }) => {
   const [balance, setBalance] = useState(0);
   const [role, setRole] = useState('Unknown');
 
@@ -27,7 +27,6 @@ const AppNavbar = ({ connectWallet, disconnectWallet, account }) => {
             <Nav.Link href="/staking">Staking</Nav.Link>
             <Nav.Link href="/dashboard">Dashboard</Nav.Link>
             <Nav.Link href="/moonpay">MoonPay</Nav.Link>
-
           </Nav>
           <div>
             {account ? (
@@ -42,6 +41,20 @@ const AppNavbar = ({ connectWallet, disconnectWallet, account }) => {
             ) : (
               <Button className="connect-wallet-btn" onClick={connectWallet}>Connect Wallet</Button>
             )}
+
+            {connected ? (
+              <Button onClick={handleLogout}>Logout</Button>
+            ) : (
+              <form onSubmit={handleLogin}>
+                <input
+                  type="email"
+                  name="email"
+                  required="required"
+                  placeholder="Enter your email"
+                />
+                <button type="submit">Send</button>
+              </form>
+            )}
           </div>
         </div>
       </Navbar.Collapse>
@@ -50,6 +63,7 @@ const AppNavbar = ({ connectWallet, disconnectWallet, account }) => {
 }
 
 export default AppNavbar;
+
 
 
 
